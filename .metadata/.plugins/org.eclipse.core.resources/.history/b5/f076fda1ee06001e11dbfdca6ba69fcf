@@ -1,0 +1,11 @@
+package br.com.Gabriel.controller.exceptions;
+
+import java.time.LocalDateTime;
+
+public class StandardError {
+
+	//atributos que sairam no console com o erro quando procura o user 3
+	private LocalDateTime timestamp; 
+	
+}
+

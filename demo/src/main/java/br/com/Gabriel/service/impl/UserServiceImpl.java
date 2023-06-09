@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import br.com.Gabriel.domain.User;
 import br.com.Gabriel.repositories.UserRepository;
 import br.com.Gabriel.service.UserService;
+import br.com.Gabriel.service.exceptions.ObjectNotFoundException;
 
 
 @Service
@@ -20,7 +21,7 @@ public class UserServiceImpl implements UserService{
 	public User findById(Long id) {
 		// TODO Auto-generated method stub
 		Optional<User> obj = repository .findById(id);
-		return obj.orElse(null);
+		return obj.orElseThrow(() -> new ObjectNotFoundException("objeto não encontrado"));
 	}
 
 	
