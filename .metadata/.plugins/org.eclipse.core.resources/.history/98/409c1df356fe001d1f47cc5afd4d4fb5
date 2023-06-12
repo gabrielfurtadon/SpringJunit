@@ -1,7 +1,0 @@
-package br.com.Gabriel.repositories;
-
-
-
-public class UserRepository extends jpaRepos{
-
-}

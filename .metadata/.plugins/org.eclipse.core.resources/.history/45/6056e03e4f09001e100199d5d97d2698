@@ -1,0 +1,5 @@
+package br.com.Gabriel.domain.dto;
+
+public class UserDTO {
+
+}

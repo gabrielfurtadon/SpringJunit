@@ -1,0 +1,6 @@
+package br.com.Gabriel.config;
+
+@Configuration
+public class ModelMapperConfig {
+
+}

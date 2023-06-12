@@ -1,0 +1,10 @@
+package br.com.Gabriel.config;
+
+@Configuration
+public class ModelMapperConfig {
+
+	public ModalMapper mapper() {
+		return new ModelMapper();
+	}
+	
+}
