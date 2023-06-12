@@ -1,5 +1,8 @@
 package br.com.Gabriel.controller;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -8,11 +11,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.Gabriel.domain.User;
 import br.com.Gabriel.domain.dto.UserDTO;
 import br.com.Gabriel.service.UserService;
 
 @RestController
-@RequestMapping(value = "/users")
+@RequestMapping(value = "/users") 
 public class UserController {
 	
 	@Autowired
@@ -34,6 +38,12 @@ public class UserController {
 		
 		return ResponseEntity.ok().body(mapper.map(service.findById(id), UserDTO.class));
 		
+	}
+	
+	@GetMapping
+	public ResponseEntity<List<UserDTO>> findAll() {
+		List<UserDTO> listDTO = service.findAll().stream().map(x -> mapper.map(x, UserDTO.class)).collect(Collectors.toList()); //VER JAVA STREAM 
+		return ResponseEntity.ok().body(listDTO);
 	}
 	
 }
