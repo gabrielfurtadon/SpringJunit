@@ -11,6 +11,7 @@ import br.com.Gabriel.domain.User;
 import br.com.Gabriel.domain.dto.UserDTO;
 import br.com.Gabriel.repositories.UserRepository;
 import br.com.Gabriel.service.UserService;
+import br.com.Gabriel.service.exceptions.DataIntegratyViolationException;
 import br.com.Gabriel.service.exceptions.ObjectNotFoundException;
 
 
@@ -36,7 +37,16 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public User create(UserDTO obj) {
+		findByEmail(obj); //SE NÃO COLOCAR AQUI PARA VERIFICAR ELE NUNCA VA EXTOURAR A EXCESSÃO
 		return repository.save(mapper.map(obj, User.class));
+	}
+	
+	
+	private void findByEmail(UserDTO obj) {
+		Optional<User> user = repository.findByEmail(obj.getEmail());
+		if(user.isPresent()) {
+			throw new DataIntegratyViolationException("Email já cadastrado no sistema");
+		}
 	}
 
 	
