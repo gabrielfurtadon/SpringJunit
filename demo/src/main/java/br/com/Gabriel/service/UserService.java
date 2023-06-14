@@ -8,9 +8,8 @@ import br.com.Gabriel.domain.dto.UserDTO;
 public interface UserService {
 
 	User findById(Long id);
-	
 	List<User> findAll();
-	
 	User create(UserDTO obj); //CRIAR NOVO USUÁRIO
+	User update(UserDTO obj);
 	
 }
