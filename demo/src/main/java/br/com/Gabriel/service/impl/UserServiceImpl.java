@@ -55,6 +55,12 @@ public class UserServiceImpl implements UserService{
 		return repository.save(mapper.map(obj, User.class));
 	}
 
+	@Override
+	public void delete(Long id) {
+		findById(id); //PARA LANÇAR A EXCESSÃO CORRETA CASO NÃO ENCONTRE O USUÁRIO
+		repository.deleteById(id);
+	}
+
 	
 	
 }

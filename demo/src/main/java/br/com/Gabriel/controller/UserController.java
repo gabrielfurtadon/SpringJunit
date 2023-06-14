@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,6 +25,8 @@ import br.com.Gabriel.service.UserService;
 @RequestMapping(value = "/users") 
 public class UserController {
 	
+	private static final String ID = "/{id}";
+	
 	@Autowired
 	private ModelMapper mapper;
 	
@@ -38,7 +41,7 @@ public class UserController {
 //		
 //	}
 	
-	@GetMapping(value = "/{id}")
+	@GetMapping(value = ID)
 	public  ResponseEntity<UserDTO> findById(@PathVariable Long id){ // dando ao client acesso à entidade User (não é interessante, problema de segurança)
 		
 		return ResponseEntity.ok().body(mapper.map(service.findById(id), UserDTO.class));
@@ -54,15 +57,21 @@ public class UserController {
 	@PostMapping
 	public ResponseEntity<UserDTO> create(@RequestBody UserDTO obj) {
 		User newObj = service.create(obj);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newObj.getId()).toUri();
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path(ID).buildAndExpand(newObj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
 	
-	@PutMapping(value = "/{id}")
+	@PutMapping(value = ID)
 	public ResponseEntity<UserDTO> update(@PathVariable Long id, @RequestBody UserDTO obj) {
 		obj.setId(id); //GARANTIR QUE O ID É O ID DA URL
 		User newObj = service.update(obj);
 		return ResponseEntity.ok().body(mapper.map(newObj, UserDTO.class));
+	}
+	
+	@DeleteMapping(value = ID)
+	public ResponseEntity<UserDTO> delete(@PathVariable Long id) {
+		service.delete(id);
+		return ResponseEntity.noContent().build();
 	}
 	
 	
