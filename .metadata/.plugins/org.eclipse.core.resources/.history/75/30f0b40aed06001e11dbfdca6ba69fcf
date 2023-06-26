@@ -1,5 +1,0 @@
-package br.com.Gabriel.service.exceptions;
-
-public class ObjectNotFoundException {
-
-}

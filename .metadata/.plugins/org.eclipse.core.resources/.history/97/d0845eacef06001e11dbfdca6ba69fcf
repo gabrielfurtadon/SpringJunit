@@ -1,5 +1,0 @@
-package br.com.Gabriel.controller.exceptions;
-
-public class ControllerExceptionHandler {
-
-}

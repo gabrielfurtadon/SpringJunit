@@ -1,0 +1,87 @@
+package br.com.Gabriel.service.impl;
+
+import static org.junit.jupiter.api.Assertions.fail;
+
+import java.util.Optional;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
+import org.modelmapper.ModelMapper;
+
+import br.com.Gabriel.domain.User;
+import br.com.Gabriel.domain.dto.UserDTO;
+import br.com.Gabriel.repositories.UserRepository;
+
+class UserServiceImplTest {
+	
+	
+	private static final String PASSWORD = "123";
+	private static final String EMAIL = "gabrielfneves2001@gmail.com";
+	private static final String NAME = "Gabriel";
+	private static final long ID = 1L;
+	
+	@InjectMocks //CRIAR UMA INSTANCIA REAL
+	private UserServiceImpl service;
+	@Mock //INSTANCIA DE MENTIRA (MOCK)
+	private UserRepository repository;
+	@Mock
+	private ModelMapper mapper;
+	
+	private User user;
+	private UserDTO userDTO;
+	private Optional<User> optionalUser;
+
+
+	@BeforeEach // FAZER ANTES DE TUDO
+	void setUp() throws Exception {
+		MockitoAnnotations.openMocks(this); //INICIAR O MOCK DA CLASSE UserServiceImpl
+		startUser();
+	}
+
+	@Test
+	void whenFindByIdThenReturnAnUserInstance() {
+		//QUANDO O FINDBYID FOR CHAMADO COM QUALQUER NUMERO INTEIRO, RETORNE O OPTIOAL USER
+		Mockito.when(repository.findById(Mockito.anyLong())).thenReturn(optionalUser);
+		
+		User response = service.findById(ID);
+		
+		Assertions.assertNotNull(response); //VERIFICAR SE NÃO É NULO 
+		Assertions.assertEquals(User.class, response.getClass()); //VERIFICAR SE RETORNA UMA USER.CLASS
+		Assertions.assertEquals(ID, response.getId()); //VERIFICAR O id é igual ao passado na constante
+		
+	}
+
+	@Test
+	void testFindAll() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testCreate() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testUpdate() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testDelete() {
+		fail("Not yet implemented");
+	}
+	
+	//PARA NÃO DAR NULLPOINTEREXCEPTION
+	private void startUser() {
+		user = new User(ID, NAME, EMAIL, PASSWORD); 
+		userDTO = new UserDTO(ID, NAME, EMAIL, PASSWORD); 
+		optionalUser = Optional.of(new User(ID, NAME, EMAIL, PASSWORD));
+	}
+	
+
+}
