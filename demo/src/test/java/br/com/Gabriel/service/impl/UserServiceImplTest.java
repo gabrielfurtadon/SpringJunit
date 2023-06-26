@@ -18,6 +18,7 @@ import org.modelmapper.ModelMapper;
 import br.com.Gabriel.domain.User;
 import br.com.Gabriel.domain.dto.UserDTO;
 import br.com.Gabriel.repositories.UserRepository;
+import br.com.Gabriel.service.exceptions.ObjectNotFoundException;
 
 class UserServiceImplTest {
 	
@@ -58,6 +59,21 @@ class UserServiceImplTest {
 		assertEquals(ID, response.getId()); //VERIFICAR O id é igual ao passado na constante
 		assertEquals(NAME, response.getName()); 
 		assertEquals(EMAIL, response.getEmail()); 
+		
+	}
+	
+	@Test
+	void whenFindByIdThenReturnAnObjectNotFoundException() {
+		//QUANDO CHAMAR O FINDBYID                            SOLTE ESSA EXCESSÃO 
+		Mockito.when(repository.findById(Mockito.anyLong())).thenThrow(new ObjectNotFoundException("Objeto não encontrado"));
+		try {
+			service.findById(ID);
+		} catch(Exception ex) {
+			             //ESPERADO                    //O QUE ACONTECE
+			assertEquals(ObjectNotFoundException.class, ex.getClass());
+			assertEquals("Objeto não encontrado", ex.getMessage());
+			
+		}
 		
 	}
 
