@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.fail;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -78,8 +79,18 @@ class UserServiceImplTest {
 	}
 
 	@Test
-	void testFindAll() {
-		fail("Not yet implemented");
+	void whenFindAllThenReturnAnListOfUsers() {
+		Mockito.when(repository.findAll()).thenReturn(List.of(user));
+		
+		List<User> response = service.findAll();
+		assertNotNull(response); //SE FOR NULO LÇARA UMA EXCESSÃO
+		assertEquals(1, response.size());//ASSEGURAR QUE A LISTA É DE APENAS 1
+		assertEquals(User.class, response.get(0).getClass());//ASSEGURAR QUE O PRIMEIRO OBJ DO ARRAY É UM OBJ DO TIPO USER
+		assertEquals(ID, response.get(0).getId()); //ASSEGURAR QUE O ID DO PRIMEIRO ITEM É IGUAL AO ID PASSADO NA CONSTANTE
+		assertEquals(NAME, response.get(0).getName()); 
+		assertEquals(EMAIL, response.get(0).getEmail()); 
+		assertEquals(PASSWORD, response.get(0).getPassword()); 
+		
 	}
 
 	@Test
